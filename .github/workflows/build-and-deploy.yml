@@ -8,10 +8,10 @@ on:
         description: environment to deploy to
         required: true
         options:
-        - qa-1
-        - qa-2
-        - stag
-        - prod
+          - qa-1
+          - qa-2
+          - stag
+          - prod
 
   push:
     branches:
