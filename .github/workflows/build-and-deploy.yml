@@ -19,21 +19,18 @@ on:
 
   pull_request:
     types: [opened, reopened, synchronize]
-    
-env:
-  ARTIFACT_NAME: deploy-artifact-v1
 
 jobs:
   build:
     uses: iccowan/reusable-workflows-test/.github/workflows/build.yml@main
     with:
-      artifact-name: ${{ env.ARTIFACT_NAME }}
+      artifact-name: deploy-artifact-v1
 
   qa-1:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       dep-env: 'qa-1'
-      artifact-name: ${{ env.ARTIFACT_NAME }}
+      artifact-name: deploy-artifact-v1
     secrets:
       env_dir: ${{ secrets.ENV_NAME }}
 
@@ -44,7 +41,7 @@ jobs:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       dep-env: 'qa-2'
-      artifact-name: ${{ env.ARTIFACT_NAME }}
+      artifact-name: deploy-artifact-v1
     secrets:
       env_dir: ${{ secrets.ENV_NAME }}
 
@@ -55,7 +52,7 @@ jobs:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       dep-env: 'stag'
-      artifact-name: ${{ env.ARTIFACT_NAME }}
+      artifact-name: deploy-artifact-v1
     secrets:
       env_dir: ${{ secrets.ENV_NAME }}
 
@@ -66,7 +63,7 @@ jobs:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       dep-env: 'prod'
-      artifact-name: ${{ env.ARTIFACT_NAME }}
+      artifact-name: deploy-artifact-v1
     secrets:
       env_dir: ${{ secrets.ENV_NAME }}
 
