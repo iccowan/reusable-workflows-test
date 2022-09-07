@@ -56,7 +56,7 @@ jobs:
       env_dir: ${{ secrets.ENV_NAME }}
 
     needs: build
-    if: ${{ github.event.inputs.dep-env == 'stag' || github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.inputs.dep-env == 'stag' || (github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') }}
 
   prod:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
