@@ -1,0 +1,70 @@
+name: build and deploy
+
+on:
+    workflow_dispatch:
+        inputs:
+            dep-env:
+                type: choice
+                description: environment to deploy to
+                required: true
+                options:
+                - qa-1
+                - qa-2
+                - stag
+                - prod
+
+    push:
+        branches:
+            - main
+
+    pull_request:
+        types: [opened, reopened, synchronize]
+
+jobs:
+    build:
+        uses: iccowan/reusable-workflows-test/.github/workflows/build.yml@main
+        with:
+            dep-env: ${{ github.event.inputs.dep-env }}
+        secrets:
+            env_dir: ${{ secrets.ENV_NAME }}
+
+    qa-1:
+        uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
+        with:
+            dep-env: 'qa-1'
+        secrets:
+            env_dir: ${{ secrets.ENV_NAME }}
+        
+        needs: build
+        if: ${{ github.event.inputs.dep-env == 'qa-1' }}
+
+    qa-2:
+        uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
+        with:
+            dep-env: 'qa-2'
+        secrets:
+            env_dir: ${{ secrets.ENV_NAME }}
+        
+        needs: build
+        if: ${{ github.event.inputs.dep-env == 'qa-2' }}
+
+    stag:
+        uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
+        with:
+            dep-env: ;stag'
+        secrets:
+            env_dir: ${{ secrets.ENV_NAME }}
+        
+        needs: build
+        if: ${{ github.event.inputs.dep-env == 'stag' || github.ref == 'refs/heads/main' }}
+
+    prod:
+        uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
+        with:
+            dep-env: 'prod'
+        secrets:
+            env_dir: ${{ secrets.ENV_NAME }}
+        
+        needs: build
+        if: ${{ github.event.inputs.dep-env == 'prod' }}
+
