@@ -16,6 +16,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: ${{inputs.dep-env}}
 
     steps:
     - uses: actions/checkout@v2
