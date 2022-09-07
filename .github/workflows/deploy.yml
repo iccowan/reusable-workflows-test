@@ -1,21 +1,22 @@
 name: deploy to environment
 
-workflow_call:
+on:
+  workflow_call:
     inputs:
-        dep-env:
-            required: true
-            type: string
+      dep-env:
+        required: true
+        type: string
     secrets:
-        env_dir:
-            required: true
+      env_dir:
+        required: true
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        
-        steps:
-        - uses: actions/checkout@v2
+  deploy:
+    runs-on: ubuntu-latest
 
-        - name: announce intentions
-          run: echo deploying to ${{github.event.inputs.dep-env}}
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: announce intentions
+      run: echo deploying to ${{github.event.inputs.dep-env}}
 
