@@ -1,18 +1,19 @@
 name: build
 
-workflow_call:
+on:
+  workflow_call:
     inputs:
-        dep-env:
-            required: true
-            type: string
+      dep-env:
+        required: true
+        type: string
     secrets:
-        env_dir:
-            required: true
+      env_dir:
+        required: true
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-        - uses: actions/checkout@v2
-          run: echo building ${{github.event.inputs.dep-env}}
+    steps:
+    - uses: actions/checkout@v2
+      run: echo building ${{github.event.inputs.dep-env}}
