@@ -1,0 +1,25 @@
+name: deploy to stag
+
+on:
+  workflow_run:
+    workflows: [build]
+    branches: [main]
+    types:
+      - completed
+      
+  workflow_call:
+    inputs:
+      artifact_name:
+        required: true
+        type: string
+        description: artifact build name to deploy (retrieve from build workflow)
+    secrets:
+      env_dir:
+        required: true
+
+jobs:
+  deploy-qa:
+    uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
+    with:
+      dep_env: 'stag'
+      artifact_name: ${{ github.event_name == 'workflow_run' ? github.event.workflow_run.env.ARTIFACT_NAME : inputs.artifact_name }}
