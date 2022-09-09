@@ -2,10 +2,15 @@ name: build
 
 on:
   workflow_call:
-    inputs:
-      artifact-name:
-        required: true
-        type: string
+  push:
+    branches:
+      - main
+
+  pull_request:
+    types: [opened, reopened, synchronize]
+    
+env:
+  ARTIFACT_NAME: build-${{ github.repository }}-${{ github.run_id }}-${{ github.run_number }}
 
 jobs:
   build:
@@ -15,4 +20,4 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: announce intentions
-      run: echo building ${{inputs.artifact-name}}
+      run: echo building ${{ env.ARTIFACT_NAME }}
