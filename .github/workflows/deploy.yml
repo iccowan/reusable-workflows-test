@@ -1,12 +1,12 @@
-name: deploy to environment
+name: deploy to environment template
 
 on:
   workflow_call:
     inputs:
-      dep-env:
+      dep_env:
         required: true
         type: string
-      artifact-name:
+      artifact_name:
         required: true
         type: string
     secrets:
@@ -16,11 +16,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{inputs.dep-env}}
+    environment: ${{ inputs.dep_env }}
 
     steps:
-    - uses: actions/checkout@v2
+    - name: retrieve artifact for deploy
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ inputs.artifact_name }}
 
+    - name: extract artifact
+      run: |
+        tar -zxvf ${{ inputs.artifact_name }}.tar.gz
+        rm ${{ inputs.artifact_name }}.tar.gz
+        
     - name: announce intentions
-      run: echo deploying ${{inputs.artifact-name}} to ${{inputs.dep-env}}
-
+      run: echo Deploying ${{ inputs.artifact_name }} to ${{ inputs.dep_env }}
