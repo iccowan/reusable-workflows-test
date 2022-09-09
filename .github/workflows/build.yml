@@ -10,7 +10,7 @@ on:
     types: [opened, reopened, synchronize]
     
 env:
-  ARTIFACT_NAME: build-${{ github.repository }}-${{ github.run_id }}-${{ github.run_number }}
+  ARTIFACT_NAME: build-${{ github.event.repository.name }}-${{ github.run_id }}-${{ github.run_number }}
 
 jobs:
   build:
