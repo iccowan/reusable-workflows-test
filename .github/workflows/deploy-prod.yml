@@ -1,0 +1,15 @@
+name: deploy to qa
+
+on:
+  workflow_dispatch:
+      artifact_name:
+        required: true
+        type: string
+        description: artifact build name to deploy (retrieve from build workflow)
+
+jobs:
+  deploy-qa:
+    uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
+    with:
+      dep_env: 'prod'
+      artifact_name: ${{ inputs.artifact_name }}
