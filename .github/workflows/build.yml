@@ -21,3 +21,6 @@ jobs:
     
     - name: announce intentions
       run: echo building ${{ env.ARTIFACT_NAME }}
+      
+    - name: output artifact information
+      run: echo "::notice title='Build Artifact'::${{ env.ARTIFACT_NAME }}"
