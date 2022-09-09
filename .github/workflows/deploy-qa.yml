@@ -1,7 +1,7 @@
 name: deploy to qa
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       qa_env:
         type: choice
@@ -15,9 +15,6 @@ on:
         required: true
         type: string
         description: artifact build name to deploy (retrieve from build workflow)
-    secrets:
-      env_dir:
-        required: true
 
 jobs:
   deploy-qa:
@@ -25,6 +22,4 @@ jobs:
     with:
       dep_env: ${{ inputs.qa_env }}
       artifact_name: ${{ inputs.artifact_name }}
-    secrets:
-      env_dir: ${{ secrets.ENV_NAME }}
     
