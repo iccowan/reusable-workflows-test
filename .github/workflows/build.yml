@@ -22,5 +22,13 @@ jobs:
     - name: announce intentions
       run: echo building ${{ env.ARTIFACT_NAME }}
       
-    - name: output artifact information
-      run: echo "::notice title='Build Artifact'::${{ env.ARTIFACT_NAME }}"
+    - name: build artifact
+      run: |
+        touch build.tar.gz
+        tar --exclude=build.tar.gz -zcvf build.tar.gz .
+        
+    - name: create build artifact
+      uses: actions/upload-artifact@v2
+      with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ./build.tar.gz
