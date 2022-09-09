@@ -1,0 +1,30 @@
+name: deploy to qa
+
+on:
+  workflow_call:
+    inputs:
+      qa_env:
+        type: choice
+        description: qa environment to deploy to
+        required: true
+        options:
+          - qa-1
+          - qa-2
+        
+      artifact_name:
+        required: true
+        type: string
+        description: artifact build name to deploy (retrieve from build workflow)
+    secrets:
+      env_dir:
+        required: true
+
+jobs:
+  deploy-qa:
+    uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
+    with:
+      dep_env: ${{ inputs.qa_env }}
+      artifact_name: ${{ inputs.artifact_name }}
+    secrets:
+      env_dir: ${{ secrets.ENV_NAME }}
+    
