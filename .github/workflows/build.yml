@@ -10,7 +10,7 @@ on:
     types: [opened, reopened, synchronize]
     
 env:
-  ARTIFACT_NAME: build-${{ github.event.repository.name }}-${{ github.run_id }}-${{ github.run_number }}
+  ARTIFACT_NAME: ${{ github.event.repository.name }}-build-${{ github.run_id }}.${{ github.run_number }}
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
         touch build.tar.gz
         tar --exclude=build.tar.gz -zcvf build.tar.gz .
         
-    - name: create build artifact
+    - name: upload artifact
       uses: actions/upload-artifact@v2
       with:
           name: ${{ env.ARTIFACT_NAME }}
