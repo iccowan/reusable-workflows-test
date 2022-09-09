@@ -14,15 +14,12 @@ on:
         type: string
         description: artifact build name to deploy (retrieve from build workflow)
 
-env:
-  ARTIFACT_NAME: ${{ github.event.repository.name }}-build-${{ github.event.workflow_run.id }}.${{ github.event.workflow_run.run_number }}
-
 jobs:
   deploy-stag-auto:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       dep_env: 'stag'
-      artifact_name: ${{ env.ARTIFACT_NAME }}
+      artifact_name: ${{ github.event.repository.name }}-build-${{ github.event.workflow_run.id }}.${{ github.event.workflow_run.run_number }}
       
     if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
       
