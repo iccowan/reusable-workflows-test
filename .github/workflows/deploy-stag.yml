@@ -15,8 +15,18 @@ on:
         description: artifact build name to deploy (retrieve from build workflow)
 
 jobs:
-  deploy-qa:
+  deploy-stag-auto:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       dep_env: 'stag'
-      artifact_name: ${{ github.event_name == 'workflow_run' ? github.event.workflow_run.env.ARTIFACT_NAME : inputs.artifact_name }}
+      artifact_name: ${{ github.event.workflow_run.env.ARTIFACT_NAME }}
+      
+    if: ${{ github.event_name == 'workflow_run' }}
+      
+  deploy-stag-manual:
+    uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
+    with:
+      dep_env: 'stag'
+      artifact_name: ${{ inputs.artifact_name }}
+    
+    if: ${{ github.event_name == 'workflow_dispatch' }}
