@@ -3,12 +3,15 @@ name: deploy to environment
 on:
   workflow_call:
     inputs:
-      dep-env:
+      environment:
         required: true
         type: string
       artifact-name:
         required: true
         type: string
+    secrets:
+      ENV_NAME:
+       required: true
 
 jobs:
   deploy:
@@ -19,5 +22,5 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: announce intentions
-      run: echo deploying ${{inputs.artifact-name}} to ${{inputs.dep-env}} on ${{ secrets.ENV_NAME }}
+      run: echo deploying ${{inputs.artifact-name}} to ${{inputs.environment}} on ${{ secrets.ENV_NAME }}
 
