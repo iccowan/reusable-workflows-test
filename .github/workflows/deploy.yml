@@ -9,9 +9,6 @@ on:
       artifact-name:
         required: true
         type: string
-    secrets:
-      env_dir:
-        required: true
 
 jobs:
   deploy:
@@ -22,5 +19,5 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: announce intentions
-      run: echo deploying ${{inputs.artifact-name}} to ${{inputs.dep-env}}
+      run: echo deploying ${{inputs.artifact-name}} to ${{inputs.dep-env}} on ${{ secrets.ENV_NAME }}
 

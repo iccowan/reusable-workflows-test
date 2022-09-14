@@ -31,8 +31,6 @@ jobs:
     with:
       dep-env: 'qa-1'
       artifact-name: 'deploy-artifact-v1'
-    secrets:
-      env_dir: ${{ secrets.ENV_NAME }}
 
     needs: build
     if: ${{ github.event.inputs.dep-env == 'qa-1' }}
