@@ -40,8 +40,6 @@ jobs:
     with:
       dep-env: 'qa-2'
       artifact-name: 'deploy-artifact-v1'
-    secrets:
-      env_dir: ${{ secrets.ENV_NAME }}
 
     needs: build
     if: ${{ github.event.inputs.dep-env == 'qa-2' }}
@@ -51,8 +49,6 @@ jobs:
     with:
       dep-env: 'stag'
       artifact-name: 'deploy-artifact-v1'
-    secrets:
-      env_dir: ${{ secrets.ENV_NAME }}
 
     needs: build
     if: ${{ github.event.inputs.dep-env == 'stag' || (github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') }}
@@ -62,8 +58,6 @@ jobs:
     with:
       dep-env: 'prod'
       artifact-name: 'deploy-artifact-v1'
-    secrets:
-      env_dir: ${{ secrets.ENV_NAME }}
 
     needs: build
     if: ${{ github.event.inputs.dep-env == 'prod' }}
