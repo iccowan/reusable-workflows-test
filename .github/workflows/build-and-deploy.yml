@@ -51,7 +51,7 @@ jobs:
   stag:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
-      environmnet: 'stag'
+      environmet: 'stag'
       artifact-name: 'deploy-artifact-v1'
     secrets:
       ENV_NAME: ${{ secrets.ENV_NAME }}
